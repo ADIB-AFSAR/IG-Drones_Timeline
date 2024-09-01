@@ -1,10 +1,6 @@
 /* General body styling */
-body {
-<<<<<<< HEAD
-    background-image: url(bg.jpg);
-=======
-    background-image: url(assets/bg.webp);
->>>>>>> 34dafd6ec45474158b46e6b303f2933027fde9b0
+body { 
+    background-image: url(bg.jpg); 
     background-repeat: no-repeat;
     background-size: cover;
     font-family: Arial, sans-serif;
