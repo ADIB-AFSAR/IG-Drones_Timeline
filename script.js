@@ -1,57 +1,68 @@
-// Select all the dots in the timeline
+// Select all timeline dots
 const dots = document.querySelectorAll('.dot');
 
-// Create a new div element for the moving dot
+// Create and append the moving dot element
 const movingDot = document.createElement('div');
 movingDot.id = 'moving-dot';
-
-// Append the moving dot to the timeline-dots container
 document.querySelector('.timeline-dots').appendChild(movingDot);
 
-// Select the container that wraps all timeline content
+// Select the content wrapper for sliding effects
 const contentWrapper = document.querySelector('.timeline-content-wrapper');
 
-// Initialize the index of the active dot
+// Initialize the active index to track the current active dot
 let activeIndex = 0;
 
-// Set the initial position of the moving dot to the position of the first active dot
-const initialDotPosition = dots[activeIndex].offsetLeft + (dots[activeIndex].offsetWidth / 2);
-movingDot.style.left = `${initialDotPosition}px`;
+// Function to update the position of the moving dot
+function updateMovingDotPosition() {
+    // Get the currently active dot
+    const dot = dots[activeIndex];
+    // Calculate the position of the moving dot relative to the timeline container
+    const dotPosition = dot.getBoundingClientRect().left + (dot.offsetWidth / 2) - document.querySelector('.timeline-dots').getBoundingClientRect().left;
+    // Update the left position of the moving dot
+    movingDot.style.left = `${dotPosition}px`;
+}
 
-// Add event listeners to each dot
+// Initialize moving dot position
+updateMovingDotPosition();
+
+// Recalculate the moving dot's position when the window is resized
+window.addEventListener('resize', updateMovingDotPosition);
+
+// Add click event listeners to all timeline dots
 dots.forEach((dot, index) => {
     dot.addEventListener('click', () => {
-        // Check if the clicked dot is different from the currently active dot
+        // Only proceed if the clicked dot is different from the current active dot
         if (activeIndex !== index) {
-            // Move the moving dot smoothly to the position of the clicked dot
-            const dotPosition = dot.offsetLeft + (dot.offsetWidth / 2);
-            movingDot.style.left = `${dotPosition}px`;
+            // Update the active index to the clicked dot
+            activeIndex = index;
+            
+            // Update the position of the moving dot
+            updateMovingDotPosition();
 
-            // Smoothly slide the content to the position of the clicked dot
+            // Smoothly slide the content to the corresponding slide
             contentWrapper.style.transform = `translateX(-${index * 100}%)`;
 
-            // Update the appearance of the active dot
-            dots[activeIndex].classList.remove('active'); // Remove 'active' class from the previous dot
-            dot.classList.add('active'); // Add 'active' class to the clicked dot
-            activeIndex = index; // Update the activeIndex to the clicked dot's index
+            // Update the active dot style
+            dots.forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
 
-            // Update the content text and image based on the clicked dot's data attributes
+            // Update the content displayed based on the clicked dot
             const date = dot.getAttribute('data-date');
             const description = dot.getAttribute('data-description');
             const image = dot.getAttribute('data-image');
 
-            document.getElementById('timeline-date').textContent = date; // Update date text
-            document.getElementById('timeline-description').textContent = description; // Update description text
+            document.getElementById('timeline-date').textContent = date;
+            document.getElementById('timeline-description').textContent = description;
 
-            // Update the image without causing flicker
             const imageElement = document.getElementById('timeline-image');
-            imageElement.style.transition = 'none'; // Remove transition to prevent flicker
-            imageElement.src = image; // Update image source
+            // Remove image transition to prevent flickering
+            imageElement.style.transition = 'none';
+            imageElement.src = image;
 
-            // Reapply the transition and opacity after a short delay to ensure smooth appearance
+            // Ensure smooth opacity transition after image load
             setTimeout(() => {
                 imageElement.style.transition = 'opacity 0.3s ease-in-out'; // Reapply transition
-                imageElement.style.opacity = 1; // Make sure the image is visible
+                imageElement.style.opacity = 1;
             }, 0);
         }
     });
