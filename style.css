@@ -1,0 +1,157 @@
+/* General body styling */
+body {
+    background-image: url(/assets/bg.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+  }
+  
+  /* Container for the timeline with styling for background, padding, and border */
+  .timeline-container {
+    background: rgba(202, 193, 193, 0.253);
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1000px;
+    overflow: hidden;
+  }
+  
+  /* Wrapper for timeline content to enable horizontal sliding */
+  .timeline-content-wrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+  }
+  
+  /* Individual timeline content items */
+  .timeline-content {
+    font-family: "Roboto";
+    font-size: 13px;
+    font-weight: bolder;
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Date text styling */
+  .timeline-date {
+    font-weight: bold !important;
+  }
+  
+  /* Container for text content within each timeline item */
+  .text-container {
+    flex-grow: 1;
+  }
+  
+  /* Container and styling for timeline dots and their connecting line */
+  .timeline-dots {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .timeline-dots::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 7.5px;
+    height: 4px;
+    background: #ccc;
+    z-index: 0;
+  }
+  
+  /* Styling for individual timeline dots */
+  .dot {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    z-index: 1;
+  }
+  
+  .dot.active {
+    background: #007bff;
+  }
+  
+  /* Moving dot that shows current position in the timeline */
+  #moving-dot {
+    position: absolute;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 0.3s ease-in-out;
+    z-index: 2;
+  }
+  
+  /* Styling for images within the timeline content */
+  .image-container img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 20px;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  /* Container for image and text within each timeline content item */
+  .content-div {
+    width: 45%;
+    display: flex;
+  }
+  
+  /* Date heading styling for small screens */
+  .date-heading {
+    color: rgb(187, 181, 181);
+    font-weight: bold;
+    width: 3rem;
+    font-size: 10px;
+    margin-top: -1.2rem;
+    margin-left: -0.5rem;
+  }
+  
+  /* Responsive adjustments for mobile view */
+  @media (max-width: 768px) {
+    .timeline-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .image-container img {
+      margin: 0 0 20px 0;
+    }
+  
+    .content-div {
+      width: 60%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .dot:nth-child(odd) .date-heading {
+      transform: translate(-20%, 350%);
+    }
+  }
+  
